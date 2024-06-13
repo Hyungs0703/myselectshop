@@ -32,7 +32,6 @@ public class UserController {
     private final UserService userService;
     private final FolderService folderService;
     private final KakaoService kakaoService;
-    private final JwtUtil jwtUtil;
 
     @GetMapping("/user/login-page")
     public String loginPage() {
@@ -82,7 +81,7 @@ public class UserController {
     public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
         String token = kakaoService.kakaoLogin(code);
 
-        Cookie cookie = new Cookie(jwtUtil.AUTHORIZATION_HEADER, token.substring(7));
+        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token.substring(7));
         cookie.setPath("/");
         response.addCookie(cookie);
         return "redirect:/";
